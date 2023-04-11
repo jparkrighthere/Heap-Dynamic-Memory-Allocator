@@ -1,0 +1,37 @@
+Script started on 2023-03-04 16:38:32-06:00 [TERM="xterm-256color" TTY="/dev/pts/35" COLUMNS="177" LINES="21"]
+[?2004h[jeonghyeon@royal-19] (1)$ make
+[?2004lmake: Nothing to be done for 'all'.
+[?2004h[jeonghyeon@royal-19] (2)$ ./mytests
+[?2004lbash: ./mytests: No such file or directory
+[?2004h[jeonghyeon@royal-19] (3)$ ./mytest
+[?2004l*********************************** HEAP: Block List ****************************
+No.	Status	Prev	t_Begin		t_End		t_Size
+---------------------------------------------------------------------------------
+1	FREE 	alloc	0xf7f8d004	0xf7f8dffb	4088
+---------------------------------------------------------------------------------
+*********************************************************************************
+Total used size =    0
+Total free size = 4088
+Total size      = 4088
+*********************************************************************************
+[?2004h[jeonghyeon@royal-19] (4)$ cat test align1.c
+[?2004lcat: test: No such file or directory
+cat: align1.c: No such file or directory
+[?2004h[jeonghyeon@royal-19] (5)$ [7mcat test_align1.c[27mcat test_align1.c
+[?2004l// first pointer returned is 8-byte aligned
+#include <assert.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include "p3Heap.h"
+
+int main() {
+   assert(init_heap(4096) == 0);
+   int* ptr = (int*) balloc(sizeof(int));
+   assert(ptr != NULL);
+   assert(((int)ptr) % 8 == 0);
+   exit(0);
+}
+[?2004h[jeonghyeon@royal-19] (6)$ exit
+[?2004lexit
+
+Script done on 2023-03-04 16:39:26-06:00 [COMMAND_EXIT_CODE="0"]

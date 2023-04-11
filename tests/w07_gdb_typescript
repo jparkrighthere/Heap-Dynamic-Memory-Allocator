@@ -1,0 +1,127 @@
+Script started on 2023-03-08 16:37:46-06:00 [TERM="xterm-256color" TTY="/dev/pts/11" COLUMNS="198" LINES="23"]
+[?2004h[jeonghyeon@rockhopper-06] (1)$ [K[jeonghyeon@rockhopper-06] (1)$ gdb test_alloc1
+[?2004l[35;1mGNU gdb (Ubuntu 12.1-0ubuntu1~22.04) 12.1[m
+Copyright (C) 2022 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+Type "show copying" and "show warranty" for details.
+This GDB was configured as "x86_64-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<https://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+    <http://www.gnu.org/software/gdb/documentation/>.
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from [32mtest_alloc1[m...
+[?2004h(gdb) break main
+[?2004lBreakpoint 1 at [34m0x11fe[m: file [32mtest_alloc1.c[m, line 7.
+[?2004h(gdb) break 9
+[?2004lBreakpoint 2 at [34m0x123e[m: file [32mtest_alloc1.c[m, line 9.
+[?2004h(gdb) run
+[?2004lStarting program: [32m/home/jeonghyeon/private/cs354/p3/tests/test_alloc1[m 
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "[32m/lib/x86_64-linux-gnu/libthread_db.so.1[m".
+
+Breakpoint 1, [33mmain[m () at [32mtest_alloc1.c[m:7
+7	    [01massert[m[31m([m[01minit_heap[m[31m([m[35m4096[m[31m)[m [31m==[m [35m0[m[31m);[m
+[?2004h[?2004l[?2004h(gdb) list
+[?2004l2	[01;34m#include[m [31m<assert.h>[m
+3	[01;34m#include[m [31m<stdlib.h>[m
+4	[01;34m#include[m [31m"p3Heap.h"[m
+5	
+6	[32mint[m [01mmain[m[31m()[m [31m{[m
+7	    [01massert[m[31m([m[01minit_heap[m[31m([m[35m4096[m[31m)[m [31m==[m [35m0[m[31m);[m
+8	    [32mvoid[m[31m*[m ptr [31m=[m [01mballoc[m[31m([m[35m8[m[31m);[m
+9	    [01massert[m[31m([mptr [31m!=[m NULL[31m);[m
+10	    [01mexit[m[31m([m[35m0[m[31m);[m
+11	[31m}[m
+[?2004h(gdb) next
+[?2004l8	    [32mvoid[m[31m*[m ptr [31m=[m [01mballoc[m[31m([m[35m8[m[31m);[m
+[?2004h[?2004l[?2004h(gdb) step
+[?2004l[33mballoc[m ([36msize[m=8) at [32mp3Heap.c[m:114
+114	    [01;34mreturn[m NULL[31m;[m
+[?2004h[?2004l[?2004h(gdb) list
+[?2004l109	[36m *[m
+110	[36m * Tips: Be careful with pointer arithmetic and scale factors.[m
+111	[36m */[m
+112	[32mvoid[m[31m*[m [01mballoc[m[31m([m[32mint[m size[31m)[m [31m{[m     
+113	    [36m//TODO: Your code goes in here.[m
+114	    [01;34mreturn[m NULL[31m;[m
+115	[31m}[m 
+116	 
+117	[36m/* [m
+118	[36m * Function for freeing up a previously allocated block.[m
+[?2004h(gdb) print size
+[?2004l$1 = 8
+[?2004h(gdb) prit[Knt sizeof(blockHeader)
+[?2004l$2 = 4
+[?2004h(gdb) print[K[K[K[K[K[7mprint heap_start->size_status[27m[C[C[C[C[C[Cprint heap_start->size_status
+[?2004l$3 = 4090
+[?2004h(gdb) print heap_start
+[?2004l$4 = (blockHeader *[36m[m) [34m0xf7fb8004[m
+[?2004h(gdb) [7mprint heap_start+sizeof(blockHeader)  [27m[C[C[C[C[C[Cprint heap_start+sizeof(blockHeader)  [K[K
+[?2004l$5 = (blockHeader *[36m[m) [34m0xf7fb8014[m
+[?2004h(gdb) [7mprint (void *) heap_start + sizeof(blockHeader)[27m[C[C[C[C[C[Cprint (void *) heap_start + sizeof(blockHeader)
+[?2004l$6 = (void *[36m[m) [34m0xf7fb8008[m
+[?2004h(gdb) continue
+[?2004lContinuing.
+
+Breakpoint 2, [33mmain[m () at [32mtest_alloc1.c[m:9
+9	    [01massert[m[31m([mptr [31m!=[m NULL[31m);[m
+[?2004h[?2004l[?2004h(gdb) print ptr
+[?2004l$7 = (void *[36m[m) [34m0x0[m
+[?2004h(gdb) next
+[?2004lUnexpected error.
+
+Program received signal SIGABRT, Aborted.
+[34m0xf7fc4549[m in [33m__kernel_vsyscall[m ()
+[?2004h[?2004l[?2004h(gdb) quit
+[?2004l[?2004hA debugging session is active.
+
+	Inferior 1 [process 861109] will be killed.
+
+Quit anyway? (y or n) y
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (2)$ ls
+[?2004l[0m[01;32mMakefile[0m*      [01;32mtest_align2[0m*   test_alloc1.c          [01;32mtest_alloc2_nospace[0m*   test_coalesce1.c  [01;32mtest_coalesce_deb1[0m*   test_fit1.c          [01;32mtest_fit2_nospace[0m*   test_free2.c
+[01;32mmytest[0m*        test_align2.c  [01;32mtest_alloc1_nospace[0m*   test_alloc2_nospace.c  [01;32mtest_coalesce2[0m*   test_coalesce_deb1.c  [01;32mtest_fit1_nospace[0m*   test_fit2_nospace.c  [01;32mtest_writeable[0m*
+mytest.c       [01;32mtest_align3[0m*   test_alloc1_nospace.c  [01;32mtest_alloc3[0m*           test_coalesce2.c  [01;32mtest_coalesce_deb2[0m*   test_fit1_nospace.c  [01;32mtest_free1[0m*          test_writeable.c
+[01;32mtest_align1[0m*   test_align3.c  [01;32mtest_alloc2[0m*           test_alloc3.c          [01;32mtest_coalesce3[0m*   test_coalesce_deb2.c  [01;32mtest_fit2[0m*           test_free1.c         typescript
+test_align1.c  [01;32mtest_alloc1[0m*   test_alloc2.c          [01;32mtest_coalesce1[0m*        test_coalesce3.c  [01;32mtest_fit1[0m*            test_fit2.c          [01;32mtest_free2[0m*          w06_p3_typescript
+[?2004h[jeonghyeon@rockhopper-06] (3)$ [7mscp typescript /p/course/cs354-deppeler/handin/202301/activities/CSLOGIN/w07_gdb_typescript[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cscp typescript /p/course/cs354-deppeler/handin/202301/activities/CSLOGIN/w07_gdb_typescript[C[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescriptj/w07_gdb_typescripte/w07_gdb_typescripto/w07_gdb_typescriptn/w07_gdb_typescriptg/w07_gdb_typescripth/w07_gdb_typescripty/w07_gdb_typescripte/w07_gdb_typescripto/w07_gdb_typescriptn/w07_gdb_typescript[C[C[C[C[C[C[C
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (4)$ ls
+[?2004l[0m[01;32mMakefile[0m*      [01;32mtest_align2[0m*   test_alloc1.c          [01;32mtest_alloc2_nospace[0m*   test_coalesce1.c  [01;32mtest_coalesce_deb1[0m*   test_fit1.c          [01;32mtest_fit2_nospace[0m*   test_free2.c
+[01;32mmytest[0m*        test_align2.c  [01;32mtest_alloc1_nospace[0m*   test_alloc2_nospace.c  [01;32mtest_coalesce2[0m*   test_coalesce_deb1.c  [01;32mtest_fit1_nospace[0m*   test_fit2_nospace.c  [01;32mtest_writeable[0m*
+mytest.c       [01;32mtest_align3[0m*   test_alloc1_nospace.c  [01;32mtest_alloc3[0m*           test_coalesce2.c  [01;32mtest_coalesce_deb2[0m*   test_fit1_nospace.c  [01;32mtest_free1[0m*          test_writeable.c
+[01;32mtest_align1[0m*   test_align3.c  [01;32mtest_alloc2[0m*           test_alloc3.c          [01;32mtest_coalesce3[0m*   test_coalesce_deb2.c  [01;32mtest_fit2[0m*           test_free1.c         typescript
+test_align1.c  [01;32mtest_alloc1[0m*   test_alloc2.c          [01;32mtest_coalesce1[0m*        test_coalesce3.c  [01;32mtest_fit1[0m*            test_fit2.c          [01;32mtest_free2[0m*          w06_p3_typescript
+[?2004h[jeonghyeon@rockhopper-06] (5)$ scp typescript [7m/p/course/cs354-deppeler/handin/202301/activities/CSLOGIN/w07_gdb_typescript[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C/p/course/cs354-deppeler/handin/202301/activities/CSLOGIN/w07_gdb_typescript
+[?2004lcp: cannot create regular file '/p/course/cs354-deppeler/handin/202301/activities/CSLOGIN/w07_gdb_typescript': No such file or directory
+[?2004h[jeonghyeon@rockhopper-06] (6)$ scp typescript [7m/p/course/cs354-deppeler/handin/202301/activities/CSLOGIN/w07_gdb_typescript[27m[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C/p/course/cs354-deppeler/handin/202301/activities/CSLOGIN/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescript[1P/w07_gdb_typescriptj/w07_gdb_typescripte/w07_gdb_typescripto/w07_gdb_typescriptn/w07_gdb_typescriptg/w07_gdb_typescripth/w07_gdb_typescripty/w07_gdb_typescripte/w07_gdb_typescripto/w07_gdb_typescriptn/w07_gdb_typescript
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (7)$ [K[jeonghyeon@rockhopper-06] (7)$ [200~mv typescript w06_p3_typescript~^C[?2004l[?2004h[?2004l
+[?2004h[jeonghyeon@rockhopper-06] (7)$ [7mmv typescript w06_p3_typescript[27mmv typescript w06_p3_typescript[1P6_p3_typescript06_p3_typescript[C[1P_p3_typescript7_p3_typescript[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1P_typescript[1P_typescript[7mw07_gdb_typescript[27m_typescript[1Pw07_gdb_typescrip_typescript[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kt [7mw07_gdb_typescript[27mw07_gdb_typescript
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (8)$ ls
+[?2004l[0m[01;32mMakefile[0m*      [01;32mtest_align2[0m*   test_alloc1.c          [01;32mtest_alloc2_nospace[0m*   test_coalesce1.c  [01;32mtest_coalesce_deb1[0m*   test_fit1.c          [01;32mtest_fit2_nospace[0m*   test_free2.c
+[01;32mmytest[0m*        test_align2.c  [01;32mtest_alloc1_nospace[0m*   test_alloc2_nospace.c  [01;32mtest_coalesce2[0m*   test_coalesce_deb1.c  [01;32mtest_fit1_nospace[0m*   test_fit2_nospace.c  [01;32mtest_writeable[0m*
+mytest.c       [01;32mtest_align3[0m*   test_alloc1_nospace.c  [01;32mtest_alloc3[0m*           test_coalesce2.c  [01;32mtest_coalesce_deb2[0m*   test_fit1_nospace.c  [01;32mtest_free1[0m*          test_writeable.c
+[01;32mtest_align1[0m*   test_align3.c  [01;32mtest_alloc2[0m*           test_alloc3.c          [01;32mtest_coalesce3[0m*   test_coalesce_deb2.c  [01;32mtest_fit2[0m*           test_free1.c         w06_p3_typescript
+test_align1.c  [01;32mtest_alloc1[0m*   test_alloc2.c          [01;32mtest_coalesce1[0m*        test_coalesce3.c  [01;32mtest_fit1[0m*            test_fit2.c          [01;32mtest_free2[0m*          w07_gdb_typescript
+[?2004h[jeonghyeon@rockhopper-06] (9)$ s[Kl[Kcd ..
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (10)$ cd ..
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (11)$  cd[K[K[Kcd ..
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (12)$ ls
+[?2004l[0m[01;34mcs354[0m/
+[?2004h[jeonghyeon@rockhopper-06] (13)$ cd ..
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (14)$ cd ..
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (15)$ ls
+[?2004l[0m[01;34mbhide[0m/  [01;34mhconway[0m/  [01;34mjeonghyeon[0m/
+[?2004h[jeonghyeon@rockhopper-06] (16)$ cd jeonghyeon
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (17)$ s[Kls
+[?2004lmakeCopies.txt  [0m[01;34mprivate[0m/  [01;34mpublic[0m/  recent.tar.gz
+[?2004h[jeonghyeon@rockhopper-06] (18)$ script
+[?2004lScript started, output log file is 'typescript'.
+[?2004h[jeonghyeon@rockhopper-06] (1)$ cd ~/private/cs354/p3
+[?2004l[?2004h[jeonghyeon@rockhopper-06] (2)$ ls
+[?2004l[0m[01;32mlibheap.
